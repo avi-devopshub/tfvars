@@ -1,0 +1,39 @@
+module "vpc" {
+    source = "./module/vpc"
+    vpc_cidr = var.vpc_cidr
+    vpc_name = var.vpc_name
+    public_cidr = var.public_cidr
+    public_az = var.public_az
+    public_subnet_name = var.public_subnet_name
+    private_cidr = var.private_cidr
+    private_az = var.private_az
+    private_subnet_name = var.private_subnet_name
+    igw_name = var.igw_name
+    eip_name = var.eip_name
+    domain_name = var.domain_name
+    nat_name = var.nat_name
+    public_rt_name = var.public_rt_name
+    private_rt_cidr = var.private_rt_cidr
+    public_rt_cidr = var.public_rt_cidr
+    private_rt_name = var.private_rt_name
+    sg_name = var.sg_name
+    ssh_port = var.ssh_port
+    ssh_protocol = var.ssh_protocol
+    sg_cidr = var.sg_cidr
+    http_port = var.http_port
+    http_protocol = var.http_protocol
+    egress_port = var.egress_port
+    egress_protocol = var.egress_protocol
+}
+
+module "ec2" {
+    source = "./module/ec2"
+    ami = var.ami
+    instance_type = var.instance_type
+    key_name = var.key_name
+    public_subnet_id = module.vpc.public_subnet_id
+    sg_id = module.vpc.sg_id
+    public_instance_name = var.public_instance_name
+    private_subnet_id = module.vpc.private_subnet_id
+    private_instance_name = var.private_instance_name
+}
